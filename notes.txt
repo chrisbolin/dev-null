@@ -1,0 +1,7 @@
+Concepts I'd like to use
+- functions
+- hashes
+- lists
+- CPAN modules
+- classes (Moo)
+
