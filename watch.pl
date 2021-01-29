@@ -1,0 +1,15 @@
+use v5.10;
+use strict;
+use warnings;
+
+my $filename = $ARGV[0] || die "file name required";
+my $prev_changed = "";
+
+while () {
+    my $last_changed = `stat $filename | grep Change:*`;
+    if ($last_changed ne $prev_changed) {
+        system "perl $filename";
+    }
+    $prev_changed = $last_changed;
+    sleep 1;
+}
