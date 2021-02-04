@@ -11,9 +11,16 @@ my $results = [
 ];
 
 use List::MoreUtils qw(uniq);
+use Data::Dumper;
 
 sub countries {
     uniq(map {$_->{user_country}} @$results);
 }
 
-print countries();
+sub filtered_results {
+    my ($country, $category) = @_;
+    grep {$_->{user_country} eq $country} @$results;
+}
+
+say Dumper countries();
+say Dumper filtered_results('Zimbabwe');
