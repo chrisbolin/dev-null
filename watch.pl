@@ -8,6 +8,7 @@ my $prev_changed = "";
 while () {
     my $last_changed = `stat $filename | grep Change:*`;
     if ($last_changed ne $prev_changed) {
+        system "clear";
         system "perl $filename";
     }
     $prev_changed = $last_changed;
