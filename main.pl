@@ -11,6 +11,7 @@ my $results = [
 ];
 
 use List::MoreUtils qw(uniq);
+use List::Util qw(sum);
 use Data::Dumper;
 
 sub countries {
@@ -22,5 +23,12 @@ sub filtered_results {
     grep {$_->{user_country} eq $country && $_->{type_tag} =~ /^$category/ } @$results;
 }
 
+sub sum_of {
+    my ($field, $array) = @_;
+    sum(map {$_->{$field}} @$array);
+}
+
 say Dumper countries();
 say Dumper filtered_results('US', 'other');
+say sum_of('estimated_revenue', $results);
+
