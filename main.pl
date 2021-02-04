@@ -19,8 +19,8 @@ sub countries {
 
 sub filtered_results {
     my ($country, $category) = @_;
-    grep {$_->{user_country} eq $country} @$results;
+    grep {$_->{user_country} eq $country && $_->{type_tag} =~ /^$category/ } @$results;
 }
 
 say Dumper countries();
-say Dumper filtered_results('Zimbabwe');
+say Dumper filtered_results('US', 'other');
