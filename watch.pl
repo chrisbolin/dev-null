@@ -6,7 +6,7 @@ my $filename = $ARGV[0] || die "file name required";
 my $prev_changed = "";
 
 while () {
-    my $last_changed = `stat $filename | grep Change:*`;
+    my $last_changed = `stat $filename`;
     if ($last_changed ne $prev_changed) {
         system "clear";
         system "perl $filename";
