@@ -3,32 +3,67 @@ use warnings;
 
 use 5.16.0;
 
-my $results = [
-    {'estimated_revenue' => '0.15', 'type_tag' => 'ipad', 'user_country' => 'Zimbabwe', 'raw_srpvs' => '146', 'epoch' => '1606780800',},
-    {'estimated_revenue' => '0.04', 'type_tag' => 'ipadext', 'user_country' => 'Zimbabwe', 'raw_srpvs' => '146', 'epoch' => '1606780800',},
-    {'estimated_revenue' => '3.03', 'type_tag' => 'other', 'user_country' => 'US', 'raw_srpvs' => '146', 'epoch' => '1606780800',},
-    {'estimated_revenue' => '1.01', 'type_tag' => 'ipad', 'user_country' => 'US', 'raw_srpvs' => '146', 'epoch' => '1606780800',},
-];
+=comment
+■ BLACK SQUARE (U+25A0)	
+□ WHITE SQUARE (U+25A1)	
+▢ WHITE SQUARE WITH ROUNDED CORNERS (U+25A2)	
+▣ WHITE SQUARE CONTAINING BLACK SMALL SQUARE (U+25A3)	
+▤ SQUARE WITH HORIZONTAL FILL (U+25A4)	
+▥ SQUARE WITH VERTICAL FILL (U+25A5)	
+▦ SQUARE WITH ORTHOGONAL CROSSHATCH FILL (U+25A6)	
+▧ SQUARE WITH UPPER LEFT TO LOWER RIGHT FILL (U+25A7)	
+▨ SQUARE WITH UPPER RIGHT TO LOWER LEFT FILL (U+25A8)	
+▩ SQUARE WITH DIAGONAL CROSSHATCH FILL (U+25A9)	
+▪ BLACK SMALL SQUARE (U+25AA)	
+▫ WHITE SMALL SQUARE (U+25AB)	
+▬ BLACK RECTANGLE (U+25AC)	
+▭ WHITE RECTANGLE (U+25AD)	
+▮ BLACK VERTICAL RECTANGLE (U+25AE)	
+▯ WHITE VERTICAL RECTANGLE (U+25AF)	
+=cut
 
-use List::MoreUtils qw(uniq);
-use List::Util qw(sum);
-use Data::Dumper;
-
-sub countries {
-    uniq(map {$_->{user_country}} @$results);
+sub print_matrix {
+    my ($rows) = @_;
+    for my $row (@$rows) {
+        for my $char (@$row) {
+            print $char || ' ';
+        }
+        print "\n";
+    }
 }
 
-sub filtered_results {
-    my ($country, $category) = @_;
-    grep {$_->{user_country} eq $country && $_->{type_tag} =~ /^$category/ } @$results;
+sub main {
+    my %params = @_;
+    my $matrix = [];
+
+    for my $y ((1..$params{height})) {
+        my $row;
+        for my $x ((1..$params{width})) {
+            my $value = $params{func}->($x, $y);
+            push @$row, $params{palette}->[$value];
+        }
+        push @$matrix, $row;
+    }
+
+    print_matrix $matrix;
 }
 
-sub sum_of {
-    my ($field, $array) = @_;
-    sum(map {$_->{$field}} @$array);
+sub func_a {
+    my ($x, $y) = @_;
+    if (($x * $y + $x / $y) % 5 == 0) {
+        return 1;
+    } elsif (($x * $y + $x / $y) % 7 == 0) {
+        return 2;
+    } elsif (($x * $y + $x / $y) % 17 == 0) {
+        return 3;
+    }
+    return 0;
 }
 
-say Dumper countries();
-say Dumper filtered_results('US', 'other');
-say sum_of('estimated_revenue', $results);
+main(
+    width => 190,
+    height => 95,
+    func => \&func_a,
+    palette => [qw/ □ ▤ ▩ ■ /],
+);
 
