@@ -2,6 +2,7 @@ use strict;
 use warnings;
 
 use 5.16.0;
+use Math::Trig;
 
 =comment
 ■ BLACK SQUARE (U+25A0)	
@@ -64,8 +65,8 @@ sub func_a {
 
 sub func {
     my ($_x, $_y) = @_;
-    my $x = $_x / 2;
-    my $y = $_y - 30.01;
+    my $x = sin($_x / 20) * 13;
+    my $y = $_y / 20 - 30.01;
     if ((($x % 13)* $y + $x / $y) % 5 == 0) {
         return 1;
     } elsif (($x * $y + $x / $y) % 7 == 0) {
