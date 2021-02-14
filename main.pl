@@ -67,12 +67,14 @@ sub func {
     my ($_x, $_y) = @_;
     my $x = sin($_x / 20) * 8;
     my $y = sin($_y / 20) * 3 - 30.01;
-    if ((($x % 13)* $y + $x / $y) % 5 == 0) {
+    if (($x * $y + $x / $y) % 5 == 0) {
         return 1;
     } elsif (($x * $y + $x / $y) % 7 == 0) {
         return 2;
     } elsif (($x * $y + $x / $y) % 11 == 0) {
         return 3;
+    } elsif (($x * $y + $x / $y) % 13 == 0) {
+        return 4;
     }
     return 0;
 }
@@ -81,6 +83,6 @@ main(
     width => 147,
     height => 90,
     func => \&func,
-    palette => [qw/ 0 ▤ ▩ ■ /],
+    palette => [qw/ 0 ◧ ▤ ▩ ■ /],
 );
 

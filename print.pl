@@ -9,14 +9,14 @@ my $i = 0;
 say "press Enter to start...";
 while (my $input = <STDIN>) {
     chomp($input);
-    system "clear";
-    system "perl $script_path";
-    chomp(my $timestamp = `date +%Y-%m-%dT%H.%M.%S%z`);
-    my $print_file = "print-$timestamp.png";
-    if ($input eq 'p') {
-        sleep 1.5;
+    if ($input eq ' ') {
+        chomp(my $timestamp = `date +%Y-%m-%dT%H.%M.%S%z`);
+        my $print_file = "print-$timestamp.png";
         system "screencapture $print_file";
         say "Printed $i. ($print_file)";
+    } else {
+        system "clear";
+        system "perl $script_path";
     }
     $i++;
 }
