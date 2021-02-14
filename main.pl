@@ -49,7 +49,23 @@ sub main {
 }
 
 sub func_a {
-    my ($x, $y) = @_;
+    my ($_x, $_y) = @_;
+    my $x = $_x / 2;
+    my $y = $_y;
+    if ((($x % 13)* $y + $x / $y) % 5 == 0) {
+        return 1;
+    } elsif (($x * $y + $x / $y) % 7 == 0) {
+        return 2;
+    } elsif (($x * $y + $x / $y) % 11 == 0) {
+        return 3;
+    }
+    return 0;
+}
+
+sub func {
+    my ($_x, $_y) = @_;
+    my $x = $_x / 2;
+    my $y = $_y - 30.01;
     if ((($x % 13)* $y + $x / $y) % 5 == 0) {
         return 1;
     } elsif (($x * $y + $x / $y) % 7 == 0) {
@@ -61,9 +77,9 @@ sub func_a {
 }
 
 main(
-    width => 190,
-    height => 96,
-    func => \&func_a,
-    palette => [qw/ □ ▤ ▩ ■ /],
+    width => 147,
+    height => 90,
+    func => \&func,
+    palette => [qw/ 0 ▤ ▩ ■ /],
 );
 
