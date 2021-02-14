@@ -65,8 +65,8 @@ sub func_a {
 
 sub func {
     my ($_x, $_y) = @_;
-    my $x = sin($_x / 20) * 13;
-    my $y = $_y / 20 - 30.01;
+    my $x = sin($_x / 20) * 8;
+    my $y = sin($_y / 20) * 3 - 30.01;
     if ((($x % 13)* $y + $x / $y) % 5 == 0) {
         return 1;
     } elsif (($x * $y + $x / $y) % 7 == 0) {
