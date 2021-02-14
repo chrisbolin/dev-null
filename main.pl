@@ -50,7 +50,7 @@ sub main {
 
 sub func_a {
     my ($x, $y) = @_;
-    if (($x * $y + $x / $y) % 5 == 0) {
+    if ((($x % 13)* $y + $x / $y) % 5 == 0) {
         return 1;
     } elsif (($x * $y + $x / $y) % 7 == 0) {
         return 2;
