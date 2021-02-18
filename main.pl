@@ -143,10 +143,29 @@ sub func_a {
     return 0;
 }
 
-sub func {
+sub funci_b {
     my ($_x, $_y) = @_;
     my $x = sin($_x / 20) * 8;
     my $y = sin($_y / 20) * 3 - 30.01;
+    ($y, $x) = ($x, $y);
+
+    if (($x * $y + $x / $y) % 5 == 0) {
+        return 1;
+    } elsif (($x * $y + $x / $y) % 7 == 0) {
+        return 2;
+    } elsif (($x * $y + $x / $y) % 11 == 0) {
+        return 3;
+    } elsif (($x * $y + $x / $y) % 13 == 0) {
+        return 4;
+    }
+    return 0;
+}
+
+
+sub func {
+    my ($x, $y) = @_;
+    #($y, $x) = ($x, $y);
+
     if (($x * $y + $x / $y) % 5 == 0) {
         return 1;
     } elsif (($x * $y + $x / $y) % 7 == 0) {
@@ -160,8 +179,8 @@ sub func {
 }
 
 main(
-    width => 147,
-    height => 90,
+    width => $ARGV[0],
+    height => $ARGV[1],
     func => \&func,
     palette => [qw/ 0 ◧ ▤ ▩ ■ /],
 );
