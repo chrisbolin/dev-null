@@ -120,7 +120,7 @@ sub main {
     for my $y ((1..$params{height})) {
         my $row;
         for my $x ((1..$params{width})) {
-            my $value = $params{func}->($x, $y);
+            my $value = $params{func}->($x, $y, $params{palette});
             push @$row, $params{palette}->[$value];
         }
         push @$matrix, $row;
@@ -162,9 +162,8 @@ sub funci_b {
 }
 
 
-sub func {
+sub func_c {
     my ($x, $y) = @_;
-    #($y, $x) = ($x, $y);
 
     if (($x * $y + $x / $y) % 5 == 0) {
         return 1;
@@ -178,10 +177,23 @@ sub func {
     return 0;
 }
 
+sub func_d {
+    my ($x, $y, $palette) = @_;
+    my $z = scalar(@$palette) - 1;
+    my $a = (
+        $y
+        + abs(($x % (2 * $z)) - $z)
+    ) % ($z + 1);
+
+    if ((($x % 7)* $y + $x / $y) % ($z + 2) == 0) {
+        return $a;
+    }
+}    
+
 main(
     width => $ARGV[0],
     height => $ARGV[1],
-    func => \&func,
-    palette => [qw/ 0 ◧ ▤ ▩ ■ /],
+    func => \&func_d,
+    palette => [qw/ 0 ▨ ▩ ■ /],
 );
 
