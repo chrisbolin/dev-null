@@ -2,7 +2,7 @@ use v5.10;
 use strict;
 use warnings;
 
-my $script_path = $ARGV[0] || die "file name required";
+my $cmd = join(" ", @ARGV) || die "file name required";
 
 my $i = 0;
 
@@ -16,7 +16,7 @@ while (my $input = <STDIN>) {
         say "Printed $i. ($print_file)";
     } else {
         system "clear";
-        system "perl $script_path";
+        system "perl $cmd";
     }
     $i++;
 }
