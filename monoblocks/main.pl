@@ -143,7 +143,7 @@ sub func_a {
     return 0;
 }
 
-sub funci_b {
+sub func_b {
     my ($_x, $_y) = @_;
     my $x = sin($_x / 20) * 8;
     my $y = sin($_y / 20) * 3 - 30.01;
