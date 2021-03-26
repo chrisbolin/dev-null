@@ -28,18 +28,13 @@ sub write_file {
 }
 
 sub demo {
-    my $letters = 'EL FIN';
-    my $inside = <<"EOF";
-      <rect width="100%" height="100%" fill="red" />
-      <circle cx="150" cy="100" r="80" fill="green" />
-      <text x="150" y="120" font-size="60" text-anchor="middle" fill="white">
-        $letters
-      </text>
-EOF
-    return svg([$inside]);
+    return svg([
+        rect({ fill => '#333' }),
+        '<circle cx="150" cy="100" r="80" fill="black" />',
+    ]);
 }
 
-sub get_props {
+sub props_polymorphic {
     my ($thing) = @_;
     
     # if it's a hash, return it
@@ -49,21 +44,37 @@ sub get_props {
 }
 
 sub props {
-    my $props = get_props(@_);
-    $props->{child} = join(" ", @{$props->{children}});
-    return $props;
+    my ($raw_props, $defaults) = @_;
+    my %props = (
+        %{$defaults // {}},
+        %{props_polymorphic($raw_props)},
+    );
+    $props{child} = join(" ", @{$props{children} // []});
+    return \%props;
 }
+
+# standard components
 
 sub svg {
     my $props = props(@_);
 
     return <<"EOF";
-<svg version="1.1"
-   baseProfile="full"
-   width="300" height="200"
-   xmlns="http://www.w3.org/2000/svg">
-    $props->{child}
-</svg>
+        <svg version="1.1"
+           baseProfile="full"
+           width="600" height="400"
+           xmlns="http://www.w3.org/2000/svg">
+            $props->{child}
+        </svg>
 EOF
 }
+
+sub rect {
+    my $props = props(@_, {
+        fill   => 'blue',
+        width  => '100%',
+        height => '100%',
+    });
+    return qq(<rect width="100%" height="100%" fill="$props->{fill}" />);
+}
+
 

@@ -1,10 +1,15 @@
 <body>
     <script>
-        setTimeout(() => {
-            window.location.reload();
-        }, 3000);
+        setInterval(() => {
+            var main = document.getElementById('main');
+            main.innerHTML = `<img src="./image.svg?=${Date.now()}" />`;
+        }, 1000);
     </script>
-    <div>
-        <img src="./image.svg" />
+    <style>
+        body {
+            background-color: black;
+        }
+    </style>
+    <div id="main">
     </div>
 </body>
